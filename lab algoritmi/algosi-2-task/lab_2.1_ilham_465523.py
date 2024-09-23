@@ -1,3 +1,5 @@
+import time
+t_start = time.perf_counter()
 f0=0
 f1=1
 f = open('input.txt')
@@ -14,3 +16,4 @@ else:
     file = open('output.txt','w')
     file.write(str(fibonacci(n)))
     file.close()
+print("В секундах" , (time.perf_counter() - t_start))
