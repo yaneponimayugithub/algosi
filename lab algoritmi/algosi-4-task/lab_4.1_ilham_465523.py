@@ -13,7 +13,10 @@ else:
     def fibonacci(number):
         if number <= 1:
             return number
-        return fibonacci( number - 1 ) + fibonacci( number - 2 )
+        a, b = 0, 1
+        for _ in range(2, number + 1):
+            a, b = b, b + a
+        return b
     file = open('output.txt','w')
     file.write(str(fibonacci(n)))
     file.close()
