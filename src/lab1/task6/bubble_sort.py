@@ -8,10 +8,14 @@ initial_memory = get_memory_usage()
 start_time = time.perf_counter()
 
 def bubble_sort(a):
-    for i in range(1, len(a)):
-        for j in range(len(a) - 1, i - 1, -1):
-            if a[j] < a[j - 1]:
-                a[j], a[j - 1] = a[j - 1], a[j]
+    for i in range(n - 1):
+        flag = False
+        for j in range(n - 1 - i):
+            if a[j] > a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+                flag = True
+        if not flag:
+            break
     return a
 
 with open('input.txt', 'r') as f:
