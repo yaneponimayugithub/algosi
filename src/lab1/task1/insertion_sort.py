@@ -30,7 +30,7 @@ if len(unsorted_base) != n:
     exit(3)
 
 for i in unsorted_base:
-    if abs(4) > 10**9:
+    if abs(i) > 10**9:
         print('[Ошибка] Числа должны быть не больше 10**9 по модулю!')
         exit(1)
 #ПРОВЕРКИ
