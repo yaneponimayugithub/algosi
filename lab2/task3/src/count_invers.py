@@ -1,8 +1,5 @@
-import time, os, psutil
+from lab2.utils import *
 
-def get_memory_usage():
-    process = psutil.Process(os.getpid())
-    return process.memory_info().rss / (1024 ** 2)
 
 def merge_and_count(arr, L, mid, R):
     left_part = arr[L:mid + 1]
@@ -35,6 +32,7 @@ def merge_and_count(arr, L, mid, R):
 
     return inversions
 
+
 def merge_sort_and_count(arr, L, R):
     inversions = 0
     if L < R:
@@ -44,28 +42,25 @@ def merge_sort_and_count(arr, L, R):
         inversions += merge_and_count(arr, L, mid, R)
     return inversions
 
+
 with open('../txtf/input.txt', 'r') as f:
     n = int(f.readline().strip())
     arr = list(map(int, f.readline().strip().split()))
 
-if not (1 <= n < 10 ** 5):
-    print('[Ошибка] количество элементов должно быть от 1 до 100.000!')
-    exit(1)
 
-for num in arr:
-    if abs(num) > 10 ** 9:
-        print('[Ошибка] Числа должны быть не больше 10**9 по модулю!')
+@measure_time_and_memory
+def task():
+    n, unlist = read_input('../txtf/input.txt')
+    if not (1 <= n < 10 ** 5):
+        print('[Ошибка] количество элементов должно быть от 1 до 100.000!')
         exit(1)
+    for num in arr:
+        if abs(num) > 10 ** 9:
+            print('[Ошибка] Числа должны быть не больше 10**9 по модулю!')
+            exit(1)
 
-start_time = time.perf_counter()
-inversion_count = merge_sort_and_count(arr, 0, n - 1)
-end_time = time.perf_counter()
+    inversion_count = merge_sort_and_count(arr, 0, n - 1)
+    write_output('../txtf/output.txt', inversion_count)
+    print(f"Число инверсий: {inversion_count}")
 
-memory_used = get_memory_usage()
-
-print(f"Число инверсий: {inversion_count}")
-print(f"Время выполнения: {end_time - start_time:.6f} секунд")
-print(f"Использование памяти: {memory_used:.8f} МБ")
-
-with open('../txtf/output.txt', 'w') as f:
-    f.write(str(inversion_count))
+task()

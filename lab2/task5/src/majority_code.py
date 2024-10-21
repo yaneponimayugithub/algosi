@@ -1,15 +1,7 @@
-import time
-import os
-import psutil
+from lab2.utils import *
 
-def get_memory_usage():
-    process = psutil.Process(os.getpid())
-    return process.memory_info().rss / (1024 ** 2)
 
-initial_memory = get_memory_usage()
-start_time = time.perf_counter()
-
-def Majority(A):
+def majority(A):
     n = len(A)
 
     for i in range(n):
@@ -25,11 +17,12 @@ def Majority(A):
 
     return None
 
+
 with open('../txtf/input.txt', 'r') as f:
     n = int(f.readline())
     unlist = list(map(int, f.readline().split()))
 
-if not (1 <= n <= 10**5):
+if not (1 <= n <= 10 ** 5):
     print('[Ошибка] количество элементов должно быть от 1 до 100.000!')
     exit(1)
 
@@ -38,22 +31,33 @@ for i in unlist:
         print('[Ошибка] Числа должны быть не больше 10**9 по модулю!')
         exit(1)
 
-
-majority_element = Majority(unlist)
-
-end_time = time.perf_counter()
-final_memory = get_memory_usage()
-time_elapsed = end_time - start_time
-memory_used = final_memory - initial_memory
+majority_element = majority(unlist)
 
 if majority_element is not None:
     result = 1
 else:
     result = 0
 
-print(f"Время выполнения: {time_elapsed:.6f} секунд")
-print(f"Использование памяти: {memory_used:.8f} МБ")
 
-# Записываем результат в файл
-with open('../txtf/output.txt', 'w') as f:
-    f.write(str(result))
+@measure_time_and_memory
+def task():
+    n, unlist = read_input('../txtf/input.txt')
+    if not (1 <= n <= 10 ** 5):
+        print('[Ошибка] количество элементов должно быть от 1 до 100.000!')
+        exit(1)
+
+    for i in unlist:
+        if abs(i) > 10 ** 9:
+            print('[Ошибка] Числа должны быть не больше 10**9 по модулю!')
+            exit(1)
+    majority_element = majority(unlist)
+
+    if majority_element is None:
+        result = 0
+    else:
+        result = 1
+
+    write_output('../txtf/output.txt', result)
+
+
+task()
