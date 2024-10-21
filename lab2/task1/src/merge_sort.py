@@ -1,7 +1,7 @@
 import time
 import os
 import psutil
-
+from lab2.utils import *
 
 def get_memory_usage():
     process = psutil.Process(os.getpid())
